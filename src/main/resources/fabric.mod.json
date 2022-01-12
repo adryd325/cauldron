@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "cauldron",
+  "name": "Cauldron",
+  "version": "${version}",
+  "description": "silly library go brr",
+  "environment": "client",
+  "license": "UNLICENSED",
+  "icon": "assets/cauldron/icon.png",
+  "contact": {
+    "homepage": "https://adryd.com/",
+    "sources": "https://github.com/adryd325/libunnamed"
+  },
+  "authors": [
+    "adryd"
+  ],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "entrypoints": {
+    "client": [
+      "com.adryd.cauldron.LibCauldronClientMod"
+    ]
+  },
+  "mixins": [
+    "cauldron.mixins.json"
+  ],
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  }
+}

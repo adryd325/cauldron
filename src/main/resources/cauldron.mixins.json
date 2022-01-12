@@ -1,0 +1,19 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.adryd.cauldron.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "command.MixinClientPlayerEntity",
+    "command.MixinCommandSuggestor",
+    "network.MixinClientPlayNetworkHandler",
+    "render.IMixinBufferBuilder",
+    "render.MixinInGameHud",
+    "render.MixinWorldRenderer"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
