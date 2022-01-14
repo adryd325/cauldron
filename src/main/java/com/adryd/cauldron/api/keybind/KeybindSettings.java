@@ -1,4 +1,5 @@
 package com.adryd.cauldron.api.keybind;
 
-public class IKeybind {
+public class KeybindSettings {
+
 }

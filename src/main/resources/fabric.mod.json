@@ -14,6 +14,11 @@
   "authors": [
     "adryd"
   ],
+  "entrypoints": {
+    "client": [
+      "com.adryd.cauldron.CauldronClientMod"
+    ]
+  },
   "depends": {
     "fabricloader": ">=0.11.3",
     "minecraft": "1.18.x",

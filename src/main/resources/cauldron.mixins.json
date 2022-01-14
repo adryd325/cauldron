@@ -9,10 +9,7 @@
     "command.MixinCommandSuggestor",
     "keybind.MixinKeyboard",
     "keybind.MixinMinecraftClient",
-    "network.MixinClientPlayNetworkHandler",
-    "render.IMixinBufferBuilder",
-    "render.MixinInGameHud",
-    "render.MixinWorldRenderer"
+    "render.IMixinBufferBuilder"
   ],
   "client": [
   ],

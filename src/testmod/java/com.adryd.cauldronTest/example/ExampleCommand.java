@@ -1,4 +1,4 @@
-package com.adryd.cauldron.example;
+package com.adryd.cauldronTest.example;
 
 import com.adryd.cauldron.api.command.ClientCommandManager;
 import com.adryd.cauldron.api.command.ClientCommandSource;
@@ -11,7 +11,7 @@ public class ExampleCommand {
     }
 
     private static int execute(ClientCommandSource source) {
-        source.sendFeedback(new LiteralText("Hello from libunnamed! <3"));
+        source.sendFeedback(new LiteralText("Hello from Cauldron test mod!"));
         return 1;
     }
 }

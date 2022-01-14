@@ -6,13 +6,13 @@ import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 
 public class QuadDrawing {
-    public static void drawBox(Box box, Vec3d cam, Color4f color, BufferBuilder buffer) {
-        double minX = box.minX - cam.x;
-        double minY = box.minY - cam.y;
-        double minZ = box.minZ - cam.z;
-        double maxX = box.maxX - cam.x;
-        double maxY = box.maxY - cam.y;
-        double maxZ = box.maxZ - cam.z;
+    public static void drawBox(Box box, Color4f color, BufferBuilder buffer) {
+        double minX = box.minX;
+        double minY = box.minY;
+        double minZ = box.minZ;
+        double maxX = box.maxX;
+        double maxY = box.maxY;
+        double maxZ = box.maxZ;
         drawBox(minX, minY, minZ, maxX, maxY, maxZ, color, buffer);
     }
 

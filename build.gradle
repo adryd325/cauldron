@@ -28,6 +28,13 @@ if (build_ci_commit != null) {
 	}
 }
 
+sourceSets {
+	testmod {
+		compileClasspath += sourceSets.main.compileClasspath
+		runtimeClasspath += sourceSets.main.runtimeClasspath
+	}
+}
+
 repositories {
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -37,16 +44,25 @@ repositories {
 }
 
 dependencies {
-	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-}
+	modImplementation fabricApi.module("fabric-api-base", project.fabric_version)
+	include fabricApi.module("fabric-api-base", project.fabric_version)
 
-subprojects {
+	modImplementation fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
+	include fabricApi.module("fabric-resource-loader-v0", project.fabric_version)
 
+	modImplementation fabricApi.module("fabric-rendering-v1", project.fabric_version)
+	include fabricApi.module("fabric-rendering-v1", project.fabric_version)
+
+	modImplementation fabricApi.module("fabric-command-api-v1", project.fabric_version)
+	include fabricApi.module("fabric-command-api-v1", project.fabric_version)
+
+	testmodImplementation sourceSets.main.output
 }
 
 processResources {
@@ -70,9 +86,18 @@ java {
 }
 
 jar {
-//	from("LICENSE") {
-//		rename { "${it}_${project.archivesBaseName}"}
-//	}
+	from("LICENSE") {
+		rename { "${it}_${project.archivesBaseName}"}
+	}
+}
+
+loom {
+	runs {
+		testmodClient {
+			client()
+			source(sourceSets.testmod)
+		}
+	}
 }
 
 // configure the maven publication
