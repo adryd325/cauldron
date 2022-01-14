@@ -2,6 +2,7 @@ package com.adryd.cauldron.example;
 
 import com.adryd.cauldron.api.render.IWorldRenderHandler;
 import com.adryd.cauldron.api.render.util.LineDrawing;
+import com.adryd.cauldron.api.render.util.QuadDrawing;
 import com.adryd.cauldron.api.util.Color4f;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -14,12 +15,13 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3d;
 
 public class ExampleWorldRenderer implements IWorldRenderHandler {
-    private boolean canRender;
+    private boolean hasDrawn;
     private VertexBuffer vbo;
     private final BufferBuilder buffer;
 
     public ExampleWorldRenderer() {
          this.buffer = new BufferBuilder(2097152);
+         this.hasDrawn = false;
     }
 
     @Override
@@ -37,19 +39,19 @@ public class ExampleWorldRenderer implements IWorldRenderHandler {
                 GlStateManager.SrcFactor.ONE,
                 GlStateManager.DstFactor.ZERO
         );
-        RenderSystem.disableDepthTest();
-        RenderSystem.lineWidth(6.0f);
         if (this.vbo == null) {
             this.vbo = new VertexBuffer();
         }
-        this.buffer.begin(VertexFormat.DrawMode.LINES, VertexFormats.LINES);
-        LineDrawing.drawBox(new Box(new BlockPos(0,-54,0)), Vec3d.ZERO, new Color4f(1.0f,0.0f,0.0f,1.0f), buffer);
-        this.buffer.end();
-        this.vbo.submitUpload(buffer);
+        if (!this.hasDrawn) {
+            this.buffer.begin(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR);
+            QuadDrawing.drawBox(new Box(new BlockPos(0, -54, 0)), Vec3d.ZERO, new Color4f(1.0f, 1.0f, 1.0f, 0.1f), buffer);
+            this.buffer.end();
+            this.vbo.submitUpload(buffer);
+        }
         matrices.push();
         matrices.translate(-camera.getPos().x, -camera.getPos().y, -camera.getPos().z);
-        RenderSystem.setShader(GameRenderer::getRenderTypeLinesShader);
-        this.vbo.setShader(matrices.peek().getPositionMatrix(), positionMatrix, GameRenderer.getRenderTypeLinesShader());
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        this.vbo.setShader(matrices.peek().getPositionMatrix(), positionMatrix, GameRenderer.getPositionColorShader());
         matrices.pop();
 
         RenderSystem.polygonOffset(0f, 0f);

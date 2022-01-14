@@ -1,20 +1,17 @@
 package com.adryd.cauldron.impl.render;
 
-import com.adryd.cauldron.LibCauldronClientMod;
-import com.adryd.cauldron.LibCauldronMod;
 import com.adryd.cauldron.api.render.IWorldRenderHandler;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gl.Framebuffer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class WorldRenderInternals {
     private static final MinecraftClient client = MinecraftClient.getInstance();
-    private static final List<IWorldRenderHandler> worldRenderHandlers = new ArrayList<>();
+    private static final Set<IWorldRenderHandler> worldRenderHandlers = new HashSet<>();
 
     public static void onWorldRender(MatrixStack matrices, Matrix4f positionMatrix, Camera camera, float tickDelta) {
         if (!worldRenderHandlers.isEmpty()) {

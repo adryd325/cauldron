@@ -34,8 +34,6 @@ public class RenderObject {
         this.vertexBuffer.submitUpload(bufferBuilder);
     }
 
-
-
     public void draw(MatrixStack matrices, Matrix4f positionMatrix) {
         this.beforeDraw();
         RenderSystem.setShader(this.shaderSupplier);

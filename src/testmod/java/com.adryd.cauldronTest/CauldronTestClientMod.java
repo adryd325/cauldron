@@ -1,13 +1,13 @@
-package com.adryd.cauldron;
+package com.adryd.cauldronTest;
 
 import com.adryd.cauldron.api.command.ClientCommandManager;
 import com.adryd.cauldron.api.render.HUDRenderManager;
 import com.adryd.cauldron.api.render.WorldRenderManager;
 import com.adryd.cauldron.api.render.helper.OverlayRenderManager;
-import com.adryd.cauldron.example.ExampleCommand;
-import com.adryd.cauldron.example.ExampleHUDRenderer;
-import com.adryd.cauldron.example.ExampleOverlayRenderer;
-import com.adryd.cauldron.example.ExampleWorldRenderer;
+import com.adryd.cauldronTest.example.ExampleCommand;
+import com.adryd.cauldronTest.example.ExampleHUDRenderer;
+import com.adryd.cauldronTest.example.ExampleOverlayRenderer;
+import com.adryd.cauldronTest.example.ExampleWorldRenderer;
 import net.fabricmc.api.ClientModInitializer;
 
 public class LibCauldronClientMod implements ClientModInitializer {
@@ -26,4 +26,5 @@ public class LibCauldronClientMod implements ClientModInitializer {
         overlayRenderManager.addRenderer(new ExampleOverlayRenderer());
 
     }
+
 }

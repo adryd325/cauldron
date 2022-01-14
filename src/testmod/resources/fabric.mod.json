@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "cauldron",
-  "name": "Cauldron",
+  "id": "cauldron-test",
+  "name": "Cauldron Test Mod",
   "version": "${version}",
-  "description": "silly library go brr",
+  "description": "test mod for cauldrons",
   "environment": "client",
   "license": "MIT",
   "icon": "assets/cauldron/icon.png",
@@ -17,16 +17,12 @@
   "depends": {
     "fabricloader": ">=0.11.3",
     "minecraft": "1.18.x",
-    "java": ">=17"
+    "java": ">=17",
+    "cauldron": ">=0.1.0"
   },
-  "mixins": [
-    "cauldron.mixins.json"
-  ],
-  "custom": {
-    "modmenu": {
-      "badges": [
-        "library"
-      ]
-    }
+  "entrypoints": {
+    "client": [
+      "com.adryd.cauldronTest.CauldronTestClientMod"
+    ]
   }
 }

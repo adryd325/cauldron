@@ -1,14 +1,32 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
 	id 'maven-publish'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
+archivesBaseName = project.archives_base_name + "-mc" + project.minecraft_version
 group = project.maven_group
+
+def build_release = System.getenv("BUILD_RELEASE") == "true"
+def build_ci_commit = System.getenv("CI_COMMIT_SHORT_SHA")
+def build_ci_branch = System.getenv("CI_COMMIT_BRANCH")
+
+version = project.mod_version + ""
+
+if (!build_release) {
+	version = project.mod_version + "+" + new Date().format('yyyyMMdd.HHmmss')
+}
+
+if (build_ci_commit != null) {
+	if (build_ci_branch != "main") {
+		version = project.mod_version + "+${build_ci_branch}.${build_ci_commit}"
+	} else {
+		version = project.mod_version + "+${build_ci_commit}"
+	}
+}
 
 repositories {
 	// Add repositories to retrieve artifacts from in here.
@@ -23,6 +41,12 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+}
+
+subprojects {
+
 }
 
 processResources {
