@@ -3,9 +3,9 @@
   "id": "cauldron-test",
   "name": "Cauldron Test Mod",
   "version": "${version}",
-  "description": "test mod for cauldrons",
+  "description": "test mod for cauldron",
   "environment": "client",
-  "license": "MIT",
+  "license": "LGPL-3.0-only",
   "icon": "assets/cauldron/icon.png",
   "contact": {
     "homepage": "https://adryd.com/",

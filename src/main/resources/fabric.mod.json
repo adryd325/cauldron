@@ -3,9 +3,9 @@
   "id": "cauldron",
   "name": "Cauldron",
   "version": "${version}",
-  "description": "silly library go brr",
+  "description": "A lightweight library partially based on MaLiLib providing helpers for client-side commands, overlay rendering, keybinds, configs and more",
   "environment": "client",
-  "license": "MIT",
+  "license": "LGPL-3.0-only",
   "icon": "assets/cauldron/icon.png",
   "contact": {
     "homepage": "https://adryd.com/",
