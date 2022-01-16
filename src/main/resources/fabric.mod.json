@@ -6,7 +6,6 @@
   "description": "A lightweight library partially based on MaLiLib providing helpers for client-side commands, overlay rendering, keybinds, configs and more",
   "environment": "client",
   "license": "LGPL-3.0-only",
-  "icon": "assets/cauldron/icon.png",
   "contact": {
     "homepage": "https://adryd.com/",
     "sources": "https://github.com/adryd325/libunnamed"

@@ -32,9 +32,6 @@ I think this is pretty simple, don't touch anything unless its in the api packag
    I'd like to have more control over the keybinds, both in development and for the user. Similar to MaLiLib.  
 
  TODO:
-
- - Make the testmod actually work lol
- 
  - Make more Color4f constructors
 
  - Mixin plugin, allow for "banned" mixins similar to fabrication in configs  
@@ -86,4 +83,37 @@ PLANS THAT ARE FUCKING CURSED AND WON'T HAPPEN (maybe in another mod):
    Why?:  
    I'm tired of having to redo my keybinds for Iris, ResolutionControl+ and Simple Voice Chat every time I disable all mods for testing
 
+
+```
+Parachute config - 0.4.0+abcdefab
+[[Features]] [ Tweaks ] [ Debug Renderers ] 
+
+WorldEdit CUI                 [ ENABLED ] [RESET] [X]
+Enable rendering                 [ TRUE ] [RESET]
+Position 1 color           [ #FF0000 ] [] [RESET]
+Position 2 color           [ #0000FF ] [] [RESET]
+Selection color            [ #FFFFFF ] [] [RESET]
+Toggle rendering             [ UNSET ] [] [RESET]
+Clear selection              [ UNSET ] [] [RESET]
+
+Overlay rendering options
+Line draw mode                [ VANILLA ] [RESET]
+Quads draw mode               [ ENABLED ] [RESET]
+```
+
+```
+Parachute config - 0.4.0+abcdefab
+[ Features ] [[Tweaks]] [ Debug Renderers ] 
+
+Step assist                  [ DISABLED ] [RESET] [X]
+Toggle enabled               [ UNSET ] [] [RESET] 
+Step Height                  []------- [] [RESET]
+
+Titlebar customization        [ ENABLED ] [RESET] [X]
+Hide modded                      [ TRUE ] [RESET]    
+Hide game status                [ FALSE ] [RESET] 
+
+Crosshair                 [ ALWAYS SHOW ] [RESET] [X]
+Toggle enabled               [ UNSET ] [] [RESET] 
+```
  

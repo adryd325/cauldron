@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '0.10-SNAPSHOT'
+	id 'org.ajoberstar.grgit' version '4.1.0'
 	id 'io.github.juuxel.loom-quiltflower-mini' version '1.1.0'
 	id 'maven-publish'
 }
@@ -7,26 +8,9 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+version = project.mod_version + getVersionMetadata()
 archivesBaseName = project.archives_base_name + "-mc" + project.minecraft_version
 group = project.maven_group
-
-def build_release = System.getenv("BUILD_RELEASE") == "true"
-def build_ci_commit = System.getenv("CI_COMMIT_SHORT_SHA")
-def build_ci_branch = System.getenv("CI_COMMIT_BRANCH")
-
-version = project.mod_version + ""
-
-if (!build_release) {
-	version = project.mod_version + "+" + new Date().format('yyyyMMdd.HHmmss')
-}
-
-if (build_ci_commit != null) {
-	if (build_ci_branch != "main") {
-		version = project.mod_version + "+${build_ci_branch}.${build_ci_commit}"
-	} else {
-		version = project.mod_version + "+${build_ci_commit}"
-	}
-}
 
 sourceSets {
 	testmod {
@@ -115,4 +99,25 @@ publishing {
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
 	}
+}
+
+def getVersionMetadata() {
+	def release = System.getenv("BUILD_RELEASE") == "true"
+
+	if (release) {
+		return ""
+	}
+
+	if (grgit != null && grgit.status().clean) {
+		def id = grgit.head().abbreviatedId
+		def branch = grgit.branch.current().name
+
+		if (branch != "main") {
+			return "+" + branch + "." + id
+		}
+
+		return "+" + id
+	}
+
+	return "+" + new Date().format('yyyyMMdd.HHmmss')
 }
