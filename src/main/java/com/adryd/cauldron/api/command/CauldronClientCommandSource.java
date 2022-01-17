@@ -1,11 +1,14 @@
 package com.adryd.cauldron.api.command;
 
+
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
+import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.command.CommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
@@ -22,12 +25,13 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class ClientCommandSource implements CommandSource {
+public class CauldronClientCommandSource implements CommandSource {
+
     private final MinecraftClient client;
     private final ChatHud chatHud;
     private final ClientPlayerEntity player;
 
-    public ClientCommandSource(MinecraftClient client) {
+    public CauldronClientCommandSource(MinecraftClient client) {
         this.client = client;
         this.player = this.client.player;
         this.chatHud = this.client.inGameHud.getChatHud();
@@ -43,14 +47,6 @@ public class ClientCommandSource implements CommandSource {
 
     public MinecraftClient getClient() {
         return this.client;
-    }
-
-    public ClientPlayerEntity getPlayer() {
-        return this.player;
-    }
-
-    public Vec3d getPosition() {
-        return this.player.getPos();
     }
 
     @Override

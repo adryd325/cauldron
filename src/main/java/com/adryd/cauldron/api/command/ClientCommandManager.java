@@ -8,17 +8,17 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 
 public class ClientCommandManager {
     public static final char COMMAND_PREFIX = '.';
-    public static final CommandDispatcher<ClientCommandSource> DISPATCHER = new CommandDispatcher<>();
+    public static final CommandDispatcher<CauldronClientCommandSource> DISPATCHER = new CommandDispatcher<>();
 
     static {
         HelpCommand.register(DISPATCHER);
     }
 
-    public static LiteralArgumentBuilder<ClientCommandSource> literal(String literal) {
+    public static LiteralArgumentBuilder<CauldronClientCommandSource> literal(String literal) {
         return LiteralArgumentBuilder.literal(literal);
     }
 
-    public static <T> RequiredArgumentBuilder<ClientCommandSource, T> argument(String name, ArgumentType<T> type) {
+    public static <T> RequiredArgumentBuilder<CauldronClientCommandSource, T> argument(String name, ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
     }
 }

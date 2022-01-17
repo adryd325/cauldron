@@ -1,7 +1,7 @@
 package com.adryd.cauldron.impl.command;
 
+import com.adryd.cauldron.api.command.CauldronClientCommandSource;
 import com.adryd.cauldron.api.command.ClientCommandManager;
-import com.adryd.cauldron.api.command.ClientCommandSource;
 import com.google.common.collect.Iterables;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
@@ -17,11 +17,11 @@ public class HelpCommand {
     private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.help.failed"));
 
     // Copied from vanilla
-    public static void register(CommandDispatcher<ClientCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CauldronClientCommandSource> dispatcher) {
         dispatcher.register(ClientCommandManager
                 .literal("help")
                 .executes(ctx -> {
-                    Map<CommandNode<ClientCommandSource>, String> map = dispatcher.getSmartUsage(dispatcher.getRoot(), ctx.getSource());
+                    Map<CommandNode<CauldronClientCommandSource>, String> map = dispatcher.getSmartUsage(dispatcher.getRoot(), ctx.getSource());
 
                     for (String string : map.values()) {
                         ctx.getSource().sendFeedback(new LiteralText(ClientCommandManager.COMMAND_PREFIX + string));
@@ -29,14 +29,14 @@ public class HelpCommand {
 
                     return map.size();
                 }).then(ClientCommandManager.argument("command", StringArgumentType.greedyString()).executes((ctx) -> {
-                    ParseResults<ClientCommandSource> parseResults = dispatcher.parse(StringArgumentType.getString(ctx, "command"), ctx.getSource());
+                    ParseResults<CauldronClientCommandSource> parseResults = dispatcher.parse(StringArgumentType.getString(ctx, "command"), ctx.getSource());
                     if (parseResults.getContext().getNodes().isEmpty()) {
                         throw FAILED_EXCEPTION.create();
                     } else {
-                        Map<CommandNode<ClientCommandSource>, String> map = dispatcher.getSmartUsage((Iterables.getLast(parseResults.getContext().getNodes())).getNode(), ctx.getSource());
+                        Map<CommandNode<CauldronClientCommandSource>, String> map = dispatcher.getSmartUsage((Iterables.getLast(parseResults.getContext().getNodes())).getNode(), ctx.getSource());
 
                         for (String string : map.values()) {
-                            ClientCommandSource source = ctx.getSource();
+                            CauldronClientCommandSource source = ctx.getSource();
                             source.sendFeedback(new LiteralText(ClientCommandManager.COMMAND_PREFIX + parseResults.getReader().getString() + " " + string));
                         }
 

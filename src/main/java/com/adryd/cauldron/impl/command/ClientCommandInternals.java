@@ -1,6 +1,6 @@
 package com.adryd.cauldron.impl.command;
 
-import com.adryd.cauldron.api.command.ClientCommandSource;
+import com.adryd.cauldron.api.command.CauldronClientCommandSource;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -30,7 +30,7 @@ public class ClientCommandInternals {
         return (DISPATCHER.getRoot().getChildren().size() > 1);
     }
 
-    public static void execute(String command, ClientCommandSource source) {
+    public static void execute(String command, CauldronClientCommandSource source) {
         StringReader stringReader = new StringReader(command);
         if (stringReader.canRead() && stringReader.peek() == COMMAND_PREFIX) {
             stringReader.skip();
@@ -68,7 +68,7 @@ public class ClientCommandInternals {
                 client.getNetworkHandler().sendPacket(new ChatMessageC2SPacket(message.substring(1)));
                 return true;
             }
-            execute(message, new ClientCommandSource(client));
+            execute(message, new CauldronClientCommandSource(client));
             return true;
         }
         return false;
@@ -84,16 +84,16 @@ public class ClientCommandInternals {
     // Used by MixinCommandSuggestor
     // Copied from vanilla
     public static RootCommandNode<CommandSource> getCommandTree() {
-        HashMap<CommandNode<ClientCommandSource>, CommandNode<CommandSource>> map = Maps.newHashMap();
+        HashMap<CommandNode<CauldronClientCommandSource>, CommandNode<CommandSource>> map = Maps.newHashMap();
         RootCommandNode<CommandSource> rootCommandNode = new RootCommandNode<>();
         map.put(DISPATCHER.getRoot(), rootCommandNode);
-        createCommandTree(DISPATCHER.getRoot(), rootCommandNode, new ClientCommandSource(client), map);
+        createCommandTree(DISPATCHER.getRoot(), rootCommandNode, new CauldronClientCommandSource(client), map);
         return rootCommandNode;
     }
 
     // Copied from vanilla
-    private static void createCommandTree(CommandNode<ClientCommandSource> tree, CommandNode<CommandSource> result, ClientCommandSource source, Map<CommandNode<ClientCommandSource>, CommandNode<CommandSource>> resultNodes) {
-        for (CommandNode<ClientCommandSource> commandNode : tree.getChildren()) {
+    private static void createCommandTree(CommandNode<CauldronClientCommandSource> tree, CommandNode<CommandSource> result, CauldronClientCommandSource source, Map<CommandNode<CauldronClientCommandSource>, CommandNode<CommandSource>> resultNodes) {
+        for (CommandNode<CauldronClientCommandSource> commandNode : tree.getChildren()) {
             if (commandNode.canUse(source)) {
                 @SuppressWarnings({"unchecked", "rawtypes"}) ArgumentBuilder<CommandSource, ?> argumentBuilder = (ArgumentBuilder) commandNode.createBuilder();
                 argumentBuilder.executes((context) -> 0);

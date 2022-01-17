@@ -1,6 +1,5 @@
 package com.adryd.cauldron.mixin.command;
 
-import com.adryd.cauldron.api.command.ClientCommandSource;
 import com.adryd.cauldron.impl.command.ClientCommandInternals;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
@@ -54,7 +53,7 @@ public abstract class MixinCommandSuggestor {
             stringReader.setCursor(stringReader.getCursor() + 1);
             CommandDispatcher<CommandSource> dispatcher = new CommandDispatcher<>(ClientCommandInternals.getCommandTree());
             if (this.parse == null) {
-                this.parse = dispatcher.parse(stringReader, new ClientCommandSource(this.client));
+                this.parse = dispatcher.parse(stringReader, client.getNetworkHandler().getCommandSource());
             }
             if (textField.getCursor() >= 1 && (this.window == null || !this.completingSuggestions)) {
                 this.pendingSuggestions = dispatcher.getCompletionSuggestions(this.parse, textField.getCursor());
