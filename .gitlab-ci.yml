@@ -29,5 +29,4 @@ build:
   cache:
     policy: pull-push
     paths:
-      - build
       - .gradle
