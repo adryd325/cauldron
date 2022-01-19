@@ -60,12 +60,11 @@ public class ExampleOverlayRenderer extends OverlayRendererBase {
         LineDrawing.drawLine(0,7,0,5,7,5, new Color4f(1f,1f,1f,1f), linesBuf);
         LineDrawing.drawLine(5,7,5,5,6,5, new Color4f(1f,1f,1f,1f), linesBuf);
 
-        // Polygon
+        // Some kind of polygon
         LineDrawing.drawLine(8,10,4,0,16,0, new Color4f(1f,1f,1f,1f), linesBuf);
         LineDrawing.drawLine(0,16,0,4,13,4, new Color4f(1f,1f,1f,1f), linesBuf);
         LineDrawing.drawLine(4,13,4,5,12,5, new Color4f(1f,1f,1f,1f), linesBuf);
         LineDrawing.drawLine(5,12,5,8,10,4, new Color4f(1f,1f,1f,1f), linesBuf);
-
 
         lines.endBuffer();
         quads.endBuffer();
