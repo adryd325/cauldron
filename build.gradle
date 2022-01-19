@@ -103,20 +103,23 @@ publishing {
 
 def getVersionMetadata() {
 	def release = System.getenv("BUILD_RELEASE") == "true"
+	def build_ci_branch = System.getenv("CI_COMMIT_BRANCH")
+
 
 	if (release) {
 		return ""
 	}
 
 	if (grgit != null && grgit.status().clean) {
-		def id = grgit.head().abbreviatedId
+		// 8 chars long to match GitLab's commit IDs
+		def id = grgit.head().id[[0..7]]
 		def branch = grgit.branch.current().name
 
-		if (branch != "main") {
-			return "+" + branch + "." + id
+		if (branch == "main" || build_ci_branch == "main") {
+			return "+" + id
 		}
 
-		return "+" + id
+		return "+" + branch + "." + id
 	}
 
 	return "+" + new Date().format('yyyyMMdd.HHmmss')
