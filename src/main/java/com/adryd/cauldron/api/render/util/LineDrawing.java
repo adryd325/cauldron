@@ -3,7 +3,6 @@ package com.adryd.cauldron.api.render.util;
 import com.adryd.cauldron.api.util.Color4f;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 
 public class LineDrawing {
 

@@ -2,7 +2,6 @@ package com.adryd.cauldron.api.render.helper;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.VertexBuffer;
-import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,11 +10,11 @@ import net.minecraft.util.math.Matrix4f;
 import java.util.function.Supplier;
 
 public class RenderObject {
-    private VertexBuffer vertexBuffer;
     protected VertexFormat.DrawMode drawMode;
     protected VertexFormat vertexFormat;
     protected Supplier<Shader> shaderSupplier;
     protected BufferBuilderProxy bufferBuilder;
+    private VertexBuffer vertexBuffer;
 
     public RenderObject(VertexFormat.DrawMode drawMode, VertexFormat vertexFormat, Supplier<Shader> shaderSupplier) {
         this.bufferBuilder = new BufferBuilderProxy(BufferBuilderProxy.MAX_BUFFER_SIZE);
@@ -41,9 +40,11 @@ public class RenderObject {
         this.afterDraw();
     }
 
-    protected void afterDraw() {};
+    protected void afterDraw() {
+    }
 
-    protected void beforeDraw() {};
+    protected void beforeDraw() {
+    }
 
     public void setup() {
         if (this.vertexBuffer != null) return;

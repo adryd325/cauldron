@@ -8,11 +8,11 @@ public interface IOverlayRenderHandler {
 
     default boolean shouldUpdate() {
         return true;
-    };
+    }
 
     default boolean shouldRender() {
         return true;
-    };
+    }
 
     void update(MatrixStack matrices, Camera camera, float tickDelta);
 

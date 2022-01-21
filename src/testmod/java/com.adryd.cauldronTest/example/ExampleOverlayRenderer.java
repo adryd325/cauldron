@@ -13,9 +13,6 @@ import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
-
-import javax.sound.sampled.Line;
 
 public class ExampleOverlayRenderer extends OverlayRendererBase {
 
@@ -52,19 +49,19 @@ public class ExampleOverlayRenderer extends OverlayRendererBase {
         QuadDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 0.1f), quadsBuf);
 
         // Line
-        LineDrawing.drawLine(0,2,0,1,3,1, new Color4f(0f,0f,0f,1f), linesBuf);
+        LineDrawing.drawLine(0, 2, 0, 1, 3, 1, new Color4f(0f, 0f, 0f, 1f), linesBuf);
 
         // Rectangle
-        LineDrawing.drawLine(5,6,5,0,6,0, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(0,6,0,0,7,0, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(0,7,0,5,7,5, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(5,7,5,5,6,5, new Color4f(1f,1f,1f,1f), linesBuf);
+        LineDrawing.drawLine(5, 6, 5, 0, 6, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(0, 6, 0, 0, 7, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(0, 7, 0, 5, 7, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(5, 7, 5, 5, 6, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
 
         // Some kind of polygon
-        LineDrawing.drawLine(8,10,4,0,16,0, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(0,16,0,4,13,4, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(4,13,4,5,12,5, new Color4f(1f,1f,1f,1f), linesBuf);
-        LineDrawing.drawLine(5,12,5,8,10,4, new Color4f(1f,1f,1f,1f), linesBuf);
+        LineDrawing.drawLine(8, 10, 4, 0, 16, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(0, 16, 0, 4, 13, 4, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(4, 13, 4, 5, 12, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(5, 12, 5, 8, 10, 4, new Color4f(1f, 1f, 1f, 1f), linesBuf);
 
         lines.endBuffer();
         quads.endBuffer();

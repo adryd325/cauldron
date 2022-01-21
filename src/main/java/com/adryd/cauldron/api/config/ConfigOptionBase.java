@@ -1,33 +1,14 @@
 package com.adryd.cauldron.api.config;
 
-import net.minecraft.text.TranslatableText;
+public abstract class ConfigOptionBase<T extends IConfigOption> implements IConfigOption {
+    private final String key;
 
-public abstract class ConfigOptionBase implements IConfigOption {
-    private final String storageKey;
-    protected TranslatableText displayName;
-    protected TranslatableText description;
-
-    ConfigOptionBase(String storageKey, TranslatableText displayName, TranslatableText description) {
-        this.storageKey = storageKey;
-        this.displayName = displayName;
-        this.description = description;
+    public ConfigOptionBase(String key) {
+        this.key = key;
     }
 
     @Override
-    public String getStorageKey() {
-        return this.storageKey;
-    }
-
-    @Override
-    public TranslatableText getDisplayName() {
-        return this.displayName;
-    }
-
-    public TranslatableText getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(TranslatableText description) {
-        this.description = description;
+    public String getKey() {
+        return this.key;
     }
 }

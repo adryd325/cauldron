@@ -29,4 +29,9 @@ build:
   cache:
     policy: pull-push
     paths:
+      - build/classes
+      - build/generated
+      - build/loom-cache
+      - build/resources
+      - build/tmp
       - .gradle

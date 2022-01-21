@@ -1,18 +1,15 @@
 package com.adryd.cauldron.api.config;
 
-import com.google.gson.JsonObject;
-import net.minecraft.text.TranslatableText;
+import com.google.gson.JsonElement;
 
 public interface IConfigOption {
-    JsonObject toJsonObject();
+    JsonElement toJsonElement();
 
-    void fromJsonObject(JsonObject element);
+    void fromJsonElement(JsonElement element);
 
     boolean isModified();
 
     void resetToDefault();
 
-    String getStorageKey();
-
-    TranslatableText getDisplayName();
+    String getKey();
 }
