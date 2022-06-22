@@ -8,11 +8,11 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ChatHud;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.command.CommandSource;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.DynamicRegistryManager;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
@@ -39,7 +39,7 @@ public class CauldronClientCommandSource implements CommandSource {
     }
 
     public void sendError(Text message) {
-        this.chatHud.addMessage(new LiteralText("").append(message).formatted(Formatting.RED));
+        this.chatHud.addMessage(Text.literal("").append(message).formatted(Formatting.RED));
     }
 
     public MinecraftClient getClient() {
@@ -67,7 +67,7 @@ public class CauldronClientCommandSource implements CommandSource {
     }
 
     @Override
-    public CompletableFuture<Suggestions> getCompletions(CommandContext<CommandSource> context, SuggestionsBuilder builder) {
+    public CompletableFuture<Suggestions> getCompletions(CommandContext<?> context) {
         return null;
     }
 
@@ -78,6 +78,11 @@ public class CauldronClientCommandSource implements CommandSource {
 
     @Override
     public DynamicRegistryManager getRegistryManager() {
+        return null;
+    }
+
+    @Override
+    public CompletableFuture<Suggestions> listIdSuggestions(RegistryKey<? extends Registry<?>> registryRef, SuggestedIdType suggestedIdType, SuggestionsBuilder builder, CommandContext<?> context) {
         return null;
     }
 

@@ -59,6 +59,8 @@ PLANS FOR THE FAR FUTURE, MAYBE:
    Command configuration  
    Use fabric permissions API instead of just OP level
    Allow clients to configure the server with a gui? maybe?
+
+  [[ BEWARE OF FEATURE CREEP ]]
  
  - Command manager improvements  
    Namespaced commands, or even larger mods implementing their own prefix.  

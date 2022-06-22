@@ -4,6 +4,7 @@
   "package": "com.adryd.cauldron.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "command.IMixinClientPlayerEntity",
     "command.IMixinMinecraftClient",
     "command.MixinClientPlayerEntity",
     "command.MixinCommandSuggestor",

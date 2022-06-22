@@ -1,6 +1,7 @@
 package com.adryd.cauldron.impl.command;
 
 import com.adryd.cauldron.api.command.CauldronClientCommandSource;
+import com.adryd.cauldron.mixin.command.IMixinClientPlayerEntity;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -9,12 +10,17 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.suggestion.SuggestionProviders;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.message.ChatMessageSigner;
+import net.minecraft.network.message.MessageSignature;
 import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,29 +49,31 @@ public class ClientCommandInternals {
             source.sendError(Texts.toText(commandException.getRawMessage()));
             if (commandException.getInput() != null && commandException.getCursor() >= 0) {
                 int position = Math.min(commandException.getInput().length(), commandException.getCursor());
-                MutableText mutableText = new LiteralText("").formatted(Formatting.GRAY).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command)));
+                MutableText mutableText = Text.literal("").formatted(Formatting.GRAY).styled(style -> style.withClickEvent(new ClickEvent(ClickEvent.Action.SUGGEST_COMMAND, command)));
                 if (position > 10) {
                     mutableText.append("...");
                 }
                 mutableText.append(commandException.getInput().substring(Math.max(0, position - 10), position));
                 if (position < commandException.getInput().length()) {
-                    MutableText text = new LiteralText(commandException.getInput().substring(position)).formatted(Formatting.RED, Formatting.UNDERLINE);
+                    MutableText text = Text.literal(commandException.getInput().substring(position)).formatted(Formatting.RED, Formatting.UNDERLINE);
                     mutableText.append(text);
                 }
-                mutableText.append(new TranslatableText("command.context.here").formatted(Formatting.RED, Formatting.ITALIC));
+                mutableText.append(Text.translatable("command.context.here").formatted(Formatting.RED, Formatting.ITALIC));
                 source.sendError(mutableText);
             }
         }
     }
 
     // Used by MixinCommandSuggestor
-    public static boolean executeCommand(String message) {
+    public static boolean executeCommand(String message, ClientPlayerEntity playerEntity, @Nullable Text preview) {
         if (!hasCommands()) return false;
         // allow people to send "./" often used to show people how to use a server command
         if (message.startsWith(Character.toString(COMMAND_PREFIX)) && !message.startsWith(COMMAND_PREFIX + "/")) {
             if (message.startsWith(COMMAND_PREFIX + Character.toString(COMMAND_PREFIX))) {
                 // allow people to send "." or messages prefixed with "." in chat, sometimes used to check if someone's cheating or something
-                client.getNetworkHandler().sendPacket(new ChatMessageC2SPacket(message.substring(1)));
+                String newMessage = message.substring(1);
+                ChatMessageSigner chatMessageSigner = ChatMessageSigner.create(playerEntity.getUuid());
+                ((IMixinClientPlayerEntity) playerEntity).invokeSendChatMessagePacket(chatMessageSigner, newMessage, preview);
                 return true;
             }
             execute(message, new CauldronClientCommandSource(client));

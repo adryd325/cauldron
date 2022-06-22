@@ -29,14 +29,13 @@ public class RenderObject {
     }
 
     public void endBuffer() {
-        this.bufferBuilder.end();
-        this.vertexBuffer.submitUpload(bufferBuilder);
+        this.vertexBuffer.upload(this.bufferBuilder.end());
     }
 
     public void draw(MatrixStack matrices, Matrix4f positionMatrix) {
         this.beforeDraw();
         RenderSystem.setShader(this.shaderSupplier);
-        this.vertexBuffer.setShader(matrices.peek().getPositionMatrix(), positionMatrix, this.shaderSupplier.get());
+        this.vertexBuffer.draw(matrices.peek().getPositionMatrix(), positionMatrix, this.shaderSupplier.get());
         this.afterDraw();
     }
 

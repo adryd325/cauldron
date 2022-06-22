@@ -8,13 +8,12 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.tree.CommandNode;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Map;
 
 public class HelpCommand {
-    private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.help.failed"));
+    private static final SimpleCommandExceptionType FAILED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.help.failed"));
 
     // Copied from vanilla
     public static void register(CommandDispatcher<CauldronClientCommandSource> dispatcher) {
@@ -24,7 +23,7 @@ public class HelpCommand {
                     Map<CommandNode<CauldronClientCommandSource>, String> map = dispatcher.getSmartUsage(dispatcher.getRoot(), ctx.getSource());
 
                     for (String string : map.values()) {
-                        ctx.getSource().sendFeedback(new LiteralText(ClientCommandManager.COMMAND_PREFIX + string));
+                        ctx.getSource().sendFeedback(Text.literal(ClientCommandManager.COMMAND_PREFIX + string));
                     }
 
                     return map.size();
@@ -37,7 +36,7 @@ public class HelpCommand {
 
                         for (String string : map.values()) {
                             CauldronClientCommandSource source = ctx.getSource();
-                            source.sendFeedback(new LiteralText(ClientCommandManager.COMMAND_PREFIX + parseResults.getReader().getString() + " " + string));
+                            source.sendFeedback(Text.literal(ClientCommandManager.COMMAND_PREFIX + parseResults.getReader().getString() + " " + string));
                         }
 
                         return map.size();
