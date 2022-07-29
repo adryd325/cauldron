@@ -14,10 +14,6 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.suggestion.SuggestionProviders;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.message.ChatMessageSigner;
-import net.minecraft.network.message.MessageSignature;
-import net.minecraft.network.packet.c2s.play.ChatMessageC2SPacket;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
@@ -72,8 +68,7 @@ public class ClientCommandInternals {
             if (message.startsWith(COMMAND_PREFIX + Character.toString(COMMAND_PREFIX))) {
                 // allow people to send "." or messages prefixed with "." in chat, sometimes used to check if someone's cheating or something
                 String newMessage = message.substring(1);
-                ChatMessageSigner chatMessageSigner = ChatMessageSigner.create(playerEntity.getUuid());
-                ((IMixinClientPlayerEntity) playerEntity).invokeSendChatMessagePacket(chatMessageSigner, newMessage, preview);
+                ((IMixinClientPlayerEntity) playerEntity).invokeSendChatMessagePacket(newMessage, preview);
                 return true;
             }
             execute(message, new CauldronClientCommandSource(client));

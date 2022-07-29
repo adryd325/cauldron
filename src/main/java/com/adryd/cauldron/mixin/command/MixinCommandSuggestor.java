@@ -6,7 +6,7 @@ import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.suggestion.Suggestions;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.CommandSuggestor;
+import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
 import org.spongepowered.asm.mixin.Final;
@@ -19,14 +19,14 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.concurrent.CompletableFuture;
 
-@Mixin(CommandSuggestor.class)
+@Mixin(ChatInputSuggestor.class)
 public abstract class MixinCommandSuggestor {
     @Final
     @Shadow
     MinecraftClient client;
 
     @Shadow
-    CommandSuggestor.SuggestionWindow window;
+    private ChatInputSuggestor.SuggestionWindow window;
 
     @Shadow
     boolean completingSuggestions;
@@ -42,7 +42,7 @@ public abstract class MixinCommandSuggestor {
     private CompletableFuture<Suggestions> pendingSuggestions;
 
     @Shadow
-    protected abstract void show();
+    protected abstract void showCommandSuggestions();
 
     @Inject(method = "refresh", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/StringReader;canRead()Z", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
 
@@ -59,7 +59,7 @@ public abstract class MixinCommandSuggestor {
                 this.pendingSuggestions = dispatcher.getCompletionSuggestions(this.parse, textField.getCursor());
                 this.pendingSuggestions.thenRun(() -> {
                     if (this.pendingSuggestions.isDone()) {
-                        this.show();
+                        this.showCommandSuggestions();
                     }
                 });
             }
