@@ -13,6 +13,7 @@
     "render.IMixinBufferBuilder"
   ],
   "client": [
+    "render.MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

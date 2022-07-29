@@ -1,6 +1,5 @@
 package com.adryd.cauldron.api.render.helper;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.Shader;
 import net.minecraft.client.render.VertexFormat;
@@ -29,13 +28,16 @@ public class RenderObject {
     }
 
     public void endBuffer() {
+        this.vertexBuffer.bind();
         this.vertexBuffer.upload(this.bufferBuilder.end());
+        VertexBuffer.unbind();
     }
 
     public void draw(MatrixStack matrices, Matrix4f positionMatrix) {
         this.beforeDraw();
-        RenderSystem.setShader(this.shaderSupplier);
+        this.vertexBuffer.bind();
         this.vertexBuffer.draw(matrices.peek().getPositionMatrix(), positionMatrix, this.shaderSupplier.get());
+        VertexBuffer.unbind();
         this.afterDraw();
     }
 

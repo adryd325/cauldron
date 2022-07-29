@@ -3,11 +3,11 @@ package com.adryd.cauldron.impl.render.helpers;
 import com.adryd.cauldron.api.render.helper.IOverlayRenderHandler;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.profiler.Profiler;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,12 +19,8 @@ public class OverlayRenderInternals {
         overlayRenderHandlers.add(renderer);
     }
 
-    public static void afterEntities(WorldRenderContext context) {
-        context.profiler().swap("CauldronOverlayRenderers");
-        MatrixStack matrices = context.matrixStack();
-        Matrix4f positionMatrix = context.projectionMatrix();
-        Camera camera = context.camera();
-        float tickDelta = context.tickDelta();
+    public static void afterChunkDebug(MatrixStack matrices, Matrix4f positionMatrix, Camera camera, float tickDelta, Profiler profiler) {
+        profiler.swap("CauldronOverlayRenderers");
         if (!overlayRenderHandlers.isEmpty()) {
             // Update
             for (IOverlayRenderHandler overlayRenderer : overlayRenderHandlers) {
