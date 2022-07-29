@@ -90,4 +90,9 @@ public class CauldronClientCommandSource implements CommandSource {
     public boolean hasPermissionLevel(int level) {
         return true;
     }
+
+    public ClientPlayerEntity getPlayer() {
+        return this.player;
+    }
+
 }
