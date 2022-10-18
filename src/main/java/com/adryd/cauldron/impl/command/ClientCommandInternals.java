@@ -77,6 +77,20 @@ public class ClientCommandInternals {
         return false;
     }
 
+    // Used by MixinChatPreviewRequestor
+    public static String chatPreviewMutator(String message) {
+        if (!hasCommands()) return message;
+        // allow people to send "./" often used to show people how to use a server command
+        if (message.startsWith(Character.toString(COMMAND_PREFIX)) && !message.startsWith(COMMAND_PREFIX + "/")) {
+            if (message.startsWith(COMMAND_PREFIX + Character.toString(COMMAND_PREFIX))) {
+                // allow people to send "." or messages prefixed with "." in chat, sometimes used to check if someone's cheating or something
+                return message.substring(1);
+            }
+            return "";
+        }
+        return message;
+    }
+
     // Used by MixinCommandSuggestor
     public static boolean shouldShowSuggestions(String message) {
         if (!hasCommands() || message.startsWith(Character.toString(COMMAND_PREFIX) + COMMAND_PREFIX) || message.startsWith(COMMAND_PREFIX + "/"))

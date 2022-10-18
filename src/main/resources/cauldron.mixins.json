@@ -4,15 +4,16 @@
   "package": "com.adryd.cauldron.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+  ],
+  "client": [
     "command.IMixinClientPlayerEntity",
     "command.IMixinMinecraftClient",
+    "command.MixinChatPreviewRequester",
     "command.MixinClientPlayerEntity",
     "command.MixinCommandSuggestor",
     "keybind.MixinKeyboard",
     "keybind.MixinMinecraftClient",
-    "render.IMixinBufferBuilder"
-  ],
-  "client": [
+    "render.IMixinBufferBuilder",
     "render.MixinWorldRenderer"
   ],
   "injectors": {
