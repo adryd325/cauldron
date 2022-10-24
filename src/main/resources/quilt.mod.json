@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "com.adryd",
+    "id": "cauldron",
+    "version": "${version}",
+    "metadata": {
+      "name": "Cauldron",
+      "description": "A lightweight library partially based on MaLiLib providing helpers for client-side commands, overlay rendering, keybinds, configs and more",
+      "contributors": {
+        "adryd": "Developer"
+      },
+      "contact": {
+        "homepage": "https://adryd.com/",
+        "sources": "https://github.com/adryd325/cauldron"
+      },
+      "icon": "assets/cauldron/icon.png"
+    },
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "entrypoints": {
+      "init": "com.adryd.cauldron.CauldronClientMod"
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.17.0-"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.19.2"
+      }
+    ]
+  },
+  "mixin": "cauldron.mixins.json"
+}

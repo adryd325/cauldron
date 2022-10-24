@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(ClientPlayerEntity.class)
 public interface IMixinClientPlayerEntity {
-    @Invoker("sendChatMessagePacket")
+    @Invoker("sendChatMessageInternal")
     void invokeSendChatMessagePacket(String string, @Nullable Text text);
 }
