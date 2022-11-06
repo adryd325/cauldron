@@ -21,6 +21,10 @@ public class ConfigInteger extends ConfigOptionBase<ConfigInteger> {
         return this.value;
     }
 
+    public void setIntegerValue(int value) {
+        this.value = Math.min(Math.max(value, this.minValue), this.maxValue);
+    }
+
     public int getMinValue() {
         return this.minValue;
     }
