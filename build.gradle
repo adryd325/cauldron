@@ -35,6 +35,7 @@ dependencies {
     mappings variantOf(libs.yarn) { classifier "v2" }
 
     modImplementation libs.quilt.loader
+    modImplementation libs.quilted.fabric.api
 
     testmodImplementation sourceSets.main.output
 

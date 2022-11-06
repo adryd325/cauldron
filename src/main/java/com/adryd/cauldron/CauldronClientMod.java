@@ -1,11 +1,12 @@
 package com.adryd.cauldron;
 
-import net.fabricmc.api.ClientModInitializer;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 
 public class CauldronClientMod implements ClientModInitializer {
 
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(ModContainer mod) {
 //        // Config
 //        ClientLifecycleEvents.CLIENT_STOPPING.register((client) -> {
 //            ConfigManagerInternals.writeAll();
