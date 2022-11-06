@@ -21,6 +21,10 @@ public class ConfigDouble extends ConfigOptionBase<ConfigDouble> {
         return this.value;
     }
 
+    public void setDoubleValue(double value) {
+        this.value = Math.min(Math.max(value, this.minValue), this.maxValue);
+    }
+
     public double getMinValue() {
         return this.minValue;
     }
