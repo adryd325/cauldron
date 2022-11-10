@@ -16,55 +16,60 @@ import net.minecraft.util.math.Box;
 
 public class ExampleOverlayRenderer extends OverlayRendererBase {
 
-    private boolean shouldUpdate;
+    private final RenderObject lines;
+    private final RenderObject quads;
 
     public ExampleOverlayRenderer() {
         this.shouldUpdate = true;
-        this.renderObjects.add(new RenderObject(VertexFormat.DrawMode.LINES, VertexFormats.LINES, GameRenderer::getRenderTypeLinesShader));
-        this.renderObjects.add(new RenderObject(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR, GameRenderer::getPositionColorShader));
-    }
-
-    public boolean shouldUpdate() {
-        return this.shouldUpdate;
+        this.lines = new RenderObject(VertexFormat.DrawMode.LINES, VertexFormats.LINES, GameRenderer::getRenderTypeLinesShader);
+        this.quads = new RenderObject(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR, GameRenderer::getPositionColorShader);
+        this.renderObjects.add(quads);
+        this.renderObjects.add(lines);
     }
 
     @Override
     public void update(MatrixStack matrices, Camera camera, float tickDelta) {
-        RenderObject lines = this.renderObjects.get(0);
-        RenderObject quads = this.renderObjects.get(1);
-
-        BufferBuilderProxy linesBuf = lines.startBuffer();
-        BufferBuilderProxy quadsBuf = quads.startBuffer();
+        BufferBuilderProxy linesBuf = this.lines.startBuffer();
+        BufferBuilderProxy quadsBuf = this.quads.startBuffer();
 
         // Red box
-        LineDrawing.drawBox(new Box(new BlockPos(2, 0, 0)), new Color4f(1f, 0f, 0f, 1f), linesBuf);
-        QuadDrawing.drawBox(new Box(new BlockPos(2, 0, 0)), new Color4f(1f, 0f, 0f, 0.1f), quadsBuf);
+        LineDrawing.drawBox(new Box(new BlockPos(2, 0, 0)), new Color4f(1f, 0f, 0f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(new Box(new BlockPos(2, 0, 0)), new Color4f(1f, 0f, 0f, 0.1f), camera, quadsBuf);
 
         // Green box
-        LineDrawing.drawBox(new Box(new BlockPos(0, 0, 0)), new Color4f(0f, 1f, 0f, 1f), linesBuf);
-        QuadDrawing.drawBox(new Box(new BlockPos(0, 0, 0)), new Color4f(0f, 1f, 0f, 0.1f), quadsBuf);
+        LineDrawing.drawBox(new Box(new BlockPos(0, 0, 0)), new Color4f(0f, 1f, 0f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(new Box(new BlockPos(0, 0, 0)), new Color4f(0f, 1f, 0f, 0.1f), camera, quadsBuf);
 
         // Blue box
-        LineDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 1f), linesBuf);
-        QuadDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 0.1f), quadsBuf);
+        LineDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
+
+        // Blue box near world border
+        LineDrawing.drawBox(new Box(new BlockPos(29000000d, 0d, 0d)), new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(new Box(new BlockPos(29000000d, 0d, 0d)), new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
+
+
+        LineDrawing.drawBox(29000000d, 0d, 2d, 29000001d, 1d, 3d, new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(29000000d, 0d, 2d, 29000001d, 1d, 3d, new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
+
 
         // Line
-        LineDrawing.drawLine(0, 2, 0, 1, 3, 1, new Color4f(0f, 0f, 0f, 1f), linesBuf);
+        LineDrawing.drawLine(0, 2, 0, 1, 3, 1, new Color4f(0f, 0f, 0f, 1f), camera, linesBuf);
 
         // Rectangle
-        LineDrawing.drawLine(5, 6, 5, 0, 6, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(0, 6, 0, 0, 7, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(0, 7, 0, 5, 7, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(5, 7, 5, 5, 6, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(5, 6, 5, 0, 6, 0, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(0, 6, 0, 0, 7, 0, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(0, 7, 0, 5, 7, 5, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(5, 7, 5, 5, 6, 5, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
 
         // Some kind of polygon
-        LineDrawing.drawLine(8, 10, 4, 0, 16, 0, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(0, 16, 0, 4, 13, 4, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(4, 13, 4, 5, 12, 5, new Color4f(1f, 1f, 1f, 1f), linesBuf);
-        LineDrawing.drawLine(5, 12, 5, 8, 10, 4, new Color4f(1f, 1f, 1f, 1f), linesBuf);
+        LineDrawing.drawLine(8, 10, 4, 0, 16, 0, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(0, 16, 0, 4, 13, 4, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(4, 13, 4, 5, 12, 5, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
+        LineDrawing.drawLine(5, 12, 5, 8, 10, 4, new Color4f(1f, 1f, 1f, 1f), camera, linesBuf);
 
-        lines.endBuffer();
-        quads.endBuffer();
+        this.lines.endBuffer(camera);
+        this.quads.endBuffer(camera);
 
         this.shouldUpdate = false;
     }

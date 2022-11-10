@@ -10,8 +10,8 @@ public class ConfigDouble extends ConfigOptionBase<ConfigDouble> {
     protected final double minValue;
     protected final double maxValue;
 
-    public ConfigDouble(String key, String name, double defaultValue, double minValue, double maxValue) {
-        super(key, name);
+    public ConfigDouble(String key, double defaultValue, double minValue, double maxValue) {
+        super(key);
         this.value = this.defaultValue = defaultValue;
         this.minValue = minValue;
         this.maxValue = maxValue;

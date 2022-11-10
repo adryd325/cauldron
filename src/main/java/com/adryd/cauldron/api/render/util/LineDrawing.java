@@ -2,21 +2,29 @@ package com.adryd.cauldron.api.render.util;
 
 import com.adryd.cauldron.api.util.Color4f;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Camera;
 import net.minecraft.util.math.Box;
 
 public class LineDrawing {
 
-    public static void drawBox(Box box, Color4f color, BufferBuilder buffer) {
+    public static void  drawBox(Box box, Color4f color, Camera camera, BufferBuilder buffer) {
         double minX = box.minX;
         double minY = box.minY;
         double minZ = box.minZ;
         double maxX = box.maxX;
         double maxY = box.maxY;
         double maxZ = box.maxZ;
-        drawBox(minX, minY, minZ, maxX, maxY, maxZ, color, buffer);
+        drawBox(minX, minY, minZ, maxX, maxY, maxZ, color, camera, buffer);
     }
 
-    public static void drawBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, BufferBuilder buffer) {
+    public static void drawBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, Camera camera, BufferBuilder buffer) {
+        minX -= camera.getPos().x;
+        maxX -= camera.getPos().x;
+        minY -= camera.getPos().y;
+        maxY -= camera.getPos().y;
+        minZ -= camera.getPos().z;
+        maxZ -= camera.getPos().z;
+
         // West side
         drawLine(minX, minY, minZ, minX, minY, maxZ, color, buffer);
         drawLine(minX, minY, maxZ, minX, maxY, maxZ, color, buffer);
@@ -38,7 +46,17 @@ public class LineDrawing {
         drawLine(maxX, maxY, maxZ, minX, maxY, maxZ, color, buffer);
     }
 
-    public static void drawLine(double startX, double startY, double startZ, double endX, double endY, double endZ, Color4f color, BufferBuilder buffer) {
+    public static void drawLine(double startX, double startY, double startZ, double endX, double endY, double endZ, Color4f color, Camera camera, BufferBuilder buffer) {
+        startX -= camera.getPos().x;
+        endX -= camera.getPos().x;
+        startY -= camera.getPos().y;
+        endY -= camera.getPos().y;
+        startZ -= camera.getPos().z;
+        endZ -= camera.getPos().z;
+
+        drawLine(startX, startY, startZ, endX, endY, endZ, color, buffer);
+    }
+    private static void drawLine(double startX, double startY, double startZ, double endX, double endY, double endZ, Color4f color, BufferBuilder buffer) {
         float lenX = (float) (endX - startX);
         float lenY = (float) (endY - startY);
         float lenZ = (float) (endZ - startZ);

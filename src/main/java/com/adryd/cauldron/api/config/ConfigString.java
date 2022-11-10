@@ -8,8 +8,8 @@ public class ConfigString extends ConfigOptionBase<ConfigString> {
     protected final String defaultValue;
     protected String value;
 
-    public ConfigString(String key, String name, String defaultValue) {
-        super(key, name);
+    public ConfigString(String key, String defaultValue) {
+        super(key);
         this.value = this.defaultValue = defaultValue;
     }
 

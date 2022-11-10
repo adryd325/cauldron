@@ -2,20 +2,28 @@ package com.adryd.cauldron.api.render.util;
 
 import com.adryd.cauldron.api.util.Color4f;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Camera;
 import net.minecraft.util.math.Box;
 
 public class QuadDrawing {
-    public static void drawBox(Box box, Color4f color, BufferBuilder buffer) {
+    public static void drawBox(Box box, Color4f color, Camera camera, BufferBuilder buffer) {
         double minX = box.minX;
         double minY = box.minY;
         double minZ = box.minZ;
         double maxX = box.maxX;
         double maxY = box.maxY;
         double maxZ = box.maxZ;
-        drawBox(minX, minY, minZ, maxX, maxY, maxZ, color, buffer);
+        drawBox(minX, minY, minZ, maxX, maxY, maxZ, color, camera, buffer);
     }
 
-    private static void drawBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, BufferBuilder buffer) {
+    public static void drawBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color4f color, Camera camera, BufferBuilder buffer) {
+        minX -= camera.getPos().x;
+        maxX -= camera.getPos().x;
+        minY -= camera.getPos().y;
+        maxY -= camera.getPos().y;
+        minZ -= camera.getPos().z;
+        maxZ -= camera.getPos().z;
+
         // West side
         buffer.vertex(minX, minY, minZ).color(color.r, color.g, color.b, color.a).next();
         buffer.vertex(minX, minY, maxZ).color(color.r, color.g, color.b, color.a).next();

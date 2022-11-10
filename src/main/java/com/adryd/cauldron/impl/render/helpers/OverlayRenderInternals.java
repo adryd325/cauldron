@@ -25,7 +25,7 @@ public class OverlayRenderInternals {
             // Update
             for (IOverlayRenderHandler overlayRenderer : overlayRenderHandlers) {
                 overlayRenderer.setup();
-                if (overlayRenderer.shouldUpdate()) {
+                if (overlayRenderer.shouldUpdate(camera)) {
                     overlayRenderer.update(matrices, camera, tickDelta);
                 }
             }
@@ -43,16 +43,13 @@ public class OverlayRenderInternals {
                     RenderSystem.disableTexture();
                     RenderSystem.disableCull();
                     RenderSystem.enableDepthTest();
-                    RenderSystem.depthMask(false);
+                    RenderSystem.depthMask(true);
                     RenderSystem.polygonOffset(-3f, -3f);
                     RenderSystem.enablePolygonOffset();
 
                     // TODO: Render objects will handle this
                     RenderSystem.lineWidth(6.0f);
-                    matrices.push();
-                    matrices.translate(-camera.getPos().x, -camera.getPos().y, -camera.getPos().z);
-                    overlayRenderer.render(matrices, positionMatrix, tickDelta);
-                    matrices.pop();
+                    overlayRenderer.render(tickDelta, camera);
                 }
             }
 

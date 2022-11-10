@@ -7,14 +7,15 @@ import com.adryd.cauldron.api.config.ConfigManager;
 import com.adryd.cauldron.api.render.helper.OverlayRenderManager;
 import com.adryd.cauldronTest.example.ExampleCommand;
 import com.adryd.cauldronTest.example.ExampleOverlayRenderer;
-import net.fabricmc.api.ClientModInitializer;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class CauldronTestClientMod implements ClientModInitializer {
 
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient(ModContainer mod) {
         Logger LOGGER = LogManager.getLogger("Cauldron Test Mod");
         ExampleCommand.register(ClientCommandManager.DISPATCHER);
 

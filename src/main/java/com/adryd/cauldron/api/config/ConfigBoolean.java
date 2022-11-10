@@ -8,8 +8,8 @@ public class ConfigBoolean extends ConfigOptionBase<ConfigBoolean> implements IC
     protected final boolean defaultValue;
     protected boolean value;
 
-    public ConfigBoolean(String key, String name, boolean defaultValue) {
-        super(key, name);
+    public ConfigBoolean(String key, boolean defaultValue) {
+        super(key);
         this.value = this.defaultValue = defaultValue;
     }
 

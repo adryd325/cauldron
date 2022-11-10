@@ -21,7 +21,7 @@
     "cauldron": ">=0.0.0"
   },
   "entrypoints": {
-    "client": [
+    "client_init": [
       "com.adryd.cauldronTest.CauldronTestClientMod"
     ]
   }

@@ -6,7 +6,7 @@ import net.minecraft.util.math.Matrix4f;
 
 public interface IOverlayRenderHandler {
 
-    default boolean shouldUpdate() {
+    default boolean shouldUpdate(Camera camera) {
         return true;
     }
 
@@ -16,7 +16,7 @@ public interface IOverlayRenderHandler {
 
     void update(MatrixStack matrices, Camera camera, float tickDelta);
 
-    void render(MatrixStack matrices, Matrix4f positionMatrix, float tickDelta);
+    void render(float tickDelta, Camera camera);
 
     void setup();
 }

@@ -25,8 +25,8 @@ public class ConfigKeybind extends ConfigOptionBase<ConfigKeybind> implements IC
 
     private Set<Consumer<Boolean>> callbacks;
 
-    public ConfigKeybind(String configKey, String name, String keyBind, KeybindAction action, KeybindContext context, boolean cancelVanilla, boolean orderSensitive) {
-        super(configKey, name);
+    public ConfigKeybind(String configKey, String keyBind, KeybindAction action, KeybindContext context, boolean cancelVanilla, boolean orderSensitive) {
+        super(configKey);
         this.action = this.defaultAction = action;
         this.context = this.defaultContext = context;
         this.keyBind = this.defaultKeyBind = keyBind;

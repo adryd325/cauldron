@@ -10,8 +10,8 @@ public class ConfigInteger extends ConfigOptionBase<ConfigInteger> {
     protected final int minValue;
     protected final int maxValue;
 
-    public ConfigInteger(String key, String name, int defaultValue, int minValue, int maxValue) {
-        super(key, name);
+    public ConfigInteger(String key, int defaultValue, int minValue, int maxValue) {
+        super(key);
         this.value = this.defaultValue = defaultValue;
         this.minValue = minValue;
         this.maxValue = maxValue;
