@@ -3,7 +3,7 @@ package com.adryd.cauldron.api.render.helper;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gl.VertexBuffer;
 import net.minecraft.client.render.Camera;
-import net.minecraft.client.render.Shader;
+import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
@@ -13,14 +13,14 @@ import java.util.function.Supplier;
 public class RenderObject {
     protected VertexFormat.DrawMode drawMode;
     protected VertexFormat vertexFormat;
-    protected Supplier<Shader> shaderSupplier;
+    protected Supplier<ShaderProgram> shaderSupplier;
     protected BufferBuilderProxy bufferBuilder;
     private VertexBuffer vertexBuffer;
 
     private Vec3d lastDrawCameraPos;
 
 
-    public RenderObject(VertexFormat.DrawMode drawMode, VertexFormat vertexFormat, Supplier<Shader> shaderSupplier) {
+    public RenderObject(VertexFormat.DrawMode drawMode, VertexFormat vertexFormat, Supplier<ShaderProgram> shaderSupplier) {
         this.bufferBuilder = new BufferBuilderProxy(BufferBuilderProxy.MAX_BUFFER_SIZE);
         this.drawMode = drawMode;
         this.vertexFormat = vertexFormat;

@@ -1,7 +1,6 @@
 package com.adryd.cauldron.impl.command;
 
 import com.adryd.cauldron.api.command.CauldronClientCommandSource;
-import com.adryd.cauldron.mixin.command.IMixinClientPlayerEntity;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -16,7 +15,6 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.suggestion.SuggestionProviders;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,20 +59,19 @@ public class ClientCommandInternals {
     }
 
     // Used by MixinCommandSuggestor
-    public static boolean executeCommand(String message, ClientPlayerEntity playerEntity, @Nullable Text preview) {
-        if (!hasCommands()) return false;
+    public static String executeCommand(String message) {
+        if (!hasCommands()) return message;
         // allow people to send "./" often used to show people how to use a server command
         if (message.startsWith(Character.toString(COMMAND_PREFIX)) && !message.startsWith(COMMAND_PREFIX + "/")) {
             if (message.startsWith(COMMAND_PREFIX + Character.toString(COMMAND_PREFIX))) {
                 // allow people to send "." or messages prefixed with "." in chat, sometimes used to check if someone's cheating or something
                 String newMessage = message.substring(1);
-                ((IMixinClientPlayerEntity) playerEntity).invokeSendChatMessagePacket(newMessage, preview);
-                return true;
+                return newMessage;
             }
             execute(message, new CauldronClientCommandSource(client));
-            return true;
+            return "";
         }
-        return false;
+        return message;
     }
 
     // Used by MixinChatPreviewRequestor

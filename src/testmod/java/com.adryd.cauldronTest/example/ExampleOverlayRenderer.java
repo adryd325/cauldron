@@ -21,8 +21,8 @@ public class ExampleOverlayRenderer extends OverlayRendererBase {
 
     public ExampleOverlayRenderer() {
         this.shouldUpdate = true;
-        this.lines = new RenderObject(VertexFormat.DrawMode.LINES, VertexFormats.LINES, GameRenderer::getRenderTypeLinesShader);
-        this.quads = new RenderObject(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR, GameRenderer::getPositionColorShader);
+        this.lines = new RenderObject(VertexFormat.DrawMode.LINES, VertexFormats.LINES, GameRenderer::getRenderTypeLinesProgram);
+        this.quads = new RenderObject(VertexFormat.DrawMode.QUADS, VertexFormats.POSITION_COLOR, GameRenderer::getPositionColorProgram);
         this.renderObjects.add(quads);
         this.renderObjects.add(lines);
     }
@@ -45,8 +45,8 @@ public class ExampleOverlayRenderer extends OverlayRendererBase {
         QuadDrawing.drawBox(new Box(new BlockPos(-2, 0, 0)), new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
 
         // Blue box near world border
-        LineDrawing.drawBox(new Box(new BlockPos(29000000d, 0d, 0d)), new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);
-        QuadDrawing.drawBox(new Box(new BlockPos(29000000d, 0d, 0d)), new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
+        LineDrawing.drawBox(new Box(new BlockPos(29000000, 0, 0)), new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);
+        QuadDrawing.drawBox(new Box(new BlockPos(29000000, 0, 0)), new Color4f(0f, 0f, 1f, 0.1f), camera, quadsBuf);
 
 
         LineDrawing.drawBox(29000000d, 0d, 2d, 29000001d, 1d, 3d, new Color4f(0f, 0f, 1f, 1f), camera, linesBuf);

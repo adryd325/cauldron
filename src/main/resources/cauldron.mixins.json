@@ -6,10 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "command.IMixinClientPlayerEntity",
     "command.IMixinMinecraftClient",
-    "command.MixinChatPreviewRequester",
-    "command.MixinClientPlayerEntity",
+    "command.MixinClientPlayNetworkHandler",
     "command.MixinCommandSuggestor",
     "keybind.MixinKeyboard",
     "keybind.MixinMinecraftClient",

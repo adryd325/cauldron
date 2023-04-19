@@ -6,8 +6,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.render.BackgroundRenderer;
 import net.minecraft.client.render.Camera;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.profiler.Profiler;
+import org.joml.Matrix4f;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,7 +40,7 @@ public class OverlayRenderInternals {
             for (IOverlayRenderHandler overlayRenderer : overlayRenderHandlers) {
                 if (overlayRenderer.shouldRender()) {
                     // Normalize
-                    RenderSystem.disableTexture();
+//                    RenderSystem.disableTexture();
                     RenderSystem.disableCull();
                     RenderSystem.enableDepthTest();
                     RenderSystem.depthMask(true);
@@ -61,7 +61,7 @@ public class OverlayRenderInternals {
             RenderSystem.enableDepthTest();
             RenderSystem.enableCull();
             RenderSystem.depthMask(true);
-            RenderSystem.enableTexture();
+//            RenderSystem.enableTexture();
             RenderSystem.setShaderFogStart(fogStart);
         }
     }

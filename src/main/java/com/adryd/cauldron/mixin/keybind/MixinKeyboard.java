@@ -19,9 +19,6 @@ public abstract class MixinKeyboard {
     @Final
     private MinecraftClient client;
 
-    @Shadow
-    private boolean repeatEvents;
-
     @Inject(method = "onKey", at = @At("HEAD"))
     private void onKey(long window, int key, int scancode, int action, int modifiers, CallbackInfo ci) {
         if (client.isOnThread() && window == this.client.getWindow().getHandle()) {
