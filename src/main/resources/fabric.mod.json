@@ -1,11 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "cauldron-test",
-  "name": "Cauldron Test Mod",
+  "id": "cauldron",
+  "name": "Cauldron",
   "version": "${version}",
-  "description": "test mod for cauldron",
+  "description": "Client side commands and rendering",
   "environment": "client",
   "license": "LGPL-3.0-only",
+  "icon": "assets/cauldron/icon.png",
   "contact": {
     "homepage": "https://adryd.com/",
     "sources": "https://github.com/adryd325/libunnamed"
@@ -15,13 +16,16 @@
   ],
   "depends": {
     "fabricloader": ">=0.14.19",
-    "minecraft": "*",
-    "java": ">=17",
-    "cauldron": "*"
+    "minecraft": "1.20",
+    "java": ">=17"
   },
+  "environment": "client",
   "entrypoints": {
     "client": [
-      "com.adryd.cauldronTest.CauldronTestClientMod"
+      "com.adryd.cauldron.CauldronClientMod"
     ]
-  }
+  },
+  "mixins": [
+    "cauldron.mixins.json"
+  ]
 }

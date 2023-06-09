@@ -7,6 +7,7 @@ import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.VertexFormat;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3d;
+import org.joml.Quaternionf;
 
 import java.util.function.Supplier;
 
@@ -52,6 +53,8 @@ public class RenderObject {
         modelViewStack.push();
         // Translate to new camera position
         modelViewStack.translate(this.lastDrawCameraPos.x-camera.getPos().x, this.lastDrawCameraPos.y-camera.getPos().y, this.lastDrawCameraPos.z-camera.getPos().z);
+        // Math is hard
+        // modelViewStack.multiply(new Quaternionf().rotationXYZ(camera.getPitch() * (float) (Math.PI / 180.0), camera.getYaw() * (float) (Math.PI / 180.0), 0.0F));
 
         // Draw
         this.vertexBuffer.bind();
@@ -71,6 +74,6 @@ public class RenderObject {
 
     public void setup() {
         if (this.vertexBuffer != null) return;
-        this.vertexBuffer = new VertexBuffer();
+        this.vertexBuffer = new VertexBuffer(VertexBuffer.Usage.DYNAMIC);
     }
 }
