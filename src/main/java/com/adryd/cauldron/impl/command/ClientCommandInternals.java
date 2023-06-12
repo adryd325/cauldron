@@ -13,6 +13,7 @@ import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.suggestion.SuggestionProviders;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 
@@ -108,31 +109,24 @@ public class ClientCommandInternals {
     // Copied from vanilla
     private static void createCommandTree(CommandNode<CauldronClientCommandSource> tree, CommandNode<CommandSource> result, CauldronClientCommandSource source, Map<CommandNode<CauldronClientCommandSource>, CommandNode<CommandSource>> resultNodes) {
         for (CommandNode<CauldronClientCommandSource> commandNode : tree.getChildren()) {
-            if (commandNode.canUse(source)) {
-                @SuppressWarnings({"unchecked", "rawtypes"}) ArgumentBuilder<CommandSource, ?> argumentBuilder = (ArgumentBuilder) commandNode.createBuilder();
-                argumentBuilder.executes((context) -> 0);
-                if (argumentBuilder.getCommand() != null) {
-                    argumentBuilder.executes((context) -> 0);
-                }
-
-                if (argumentBuilder instanceof RequiredArgumentBuilder) {
-                    @SuppressWarnings({"unchecked", "rawtypes"}) RequiredArgumentBuilder<CommandSource, ?> requiredArgumentBuilder = (RequiredArgumentBuilder) argumentBuilder;
-                    if (requiredArgumentBuilder.getSuggestionsProvider() != null) {
-                        requiredArgumentBuilder.suggests(SuggestionProviders.getLocalProvider(requiredArgumentBuilder.getSuggestionsProvider()));
-                    }
-                }
-
-                if (argumentBuilder.getRedirect() != null) {
-                    argumentBuilder.redirect(resultNodes.get(argumentBuilder.getRedirect()));
-                }
-
-                CommandNode<CommandSource> requiredArgumentBuilder = argumentBuilder.build();
-                resultNodes.put(commandNode, requiredArgumentBuilder);
-                result.addChild(requiredArgumentBuilder);
-                if (!commandNode.getChildren().isEmpty()) {
-                    createCommandTree(commandNode, requiredArgumentBuilder, source, resultNodes);
-                }
+            RequiredArgumentBuilder requiredArgumentBuilder;
+            if (!commandNode.canUse(source)) continue;
+            ArgumentBuilder<CommandSource, ?> argumentBuilder = (ArgumentBuilder)  commandNode.createBuilder();
+            argumentBuilder.requires(source2 -> true);
+            if (argumentBuilder.getCommand() != null) {
+                argumentBuilder.executes(context -> 0);
             }
+            if (argumentBuilder instanceof RequiredArgumentBuilder && (requiredArgumentBuilder = (RequiredArgumentBuilder)argumentBuilder).getSuggestionsProvider() != null) {
+                requiredArgumentBuilder.suggests(SuggestionProviders.getLocalProvider(requiredArgumentBuilder.getSuggestionsProvider()));
+            }
+            if (argumentBuilder.getRedirect() != null) {
+                argumentBuilder.redirect(resultNodes.get(argumentBuilder.getRedirect()));
+            }
+            CommandNode<CommandSource> requiredArgumentBuilder2 = argumentBuilder.build();
+            resultNodes.put(commandNode, requiredArgumentBuilder2);
+            result.addChild(requiredArgumentBuilder2);
+            if (commandNode.getChildren().isEmpty()) continue;
+            createCommandTree(commandNode, requiredArgumentBuilder2, source, resultNodes);
         }
     }
 }
