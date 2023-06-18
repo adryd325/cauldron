@@ -38,6 +38,7 @@ public abstract class MixinClientPlayNetworkHandler {
             LastSeenMessagesCollector.LastSeenMessages lastSeenMessages = this.lastSeenMessagesCollector.collect();
             MessageSignatureData messageSignatureData = this.messagePacker.pack(new MessageBody(result, instant, l, lastSeenMessages.lastSeen()));
             this.sendPacket(new ChatMessageC2SPacket(result, instant, l, messageSignatureData, lastSeenMessages.update()));
+            ci.cancel();
         }
     }
 }
