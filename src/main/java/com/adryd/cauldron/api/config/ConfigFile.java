@@ -2,6 +2,7 @@ package com.adryd.cauldron.api.config;
 
 import com.adryd.cauldron.CauldronReference;
 import com.google.gson.*;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 
 import java.io.*;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ConfigFile {
-    private static final File configDir = new File(MinecraftClient.getInstance().runDirectory, "config");
+    private static final File configDir = FabricLoader.getInstance().getConfigDir().toFile();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private final File file;
     private final List<IConfigOption> configOptions;
